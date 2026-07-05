@@ -8,4 +8,5 @@ ENV/
 env/
 .mxplay_cache.json
 subdubanime_full_results.json
+subdubanime_catalog_sample.json
 *.log

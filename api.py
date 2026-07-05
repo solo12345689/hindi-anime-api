@@ -25,6 +25,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup_event():
+    if not os.path.exists(CATALOG_FILE) and not os.path.exists(RESULTS_FILE):
+        logger.info("Local catalog files not found. Auto-generating base catalog from live API server...")
+        try:
+            async with httpx.AsyncClient(timeout=15.0) as client:
+                resp = await client.get(CATALOG_URL)
+                if resp.status_code == 200:
+                    os.makedirs(DATA_DIR, exist_ok=True)
+                    with open(CATALOG_FILE, "w", encoding="utf-8") as f:
+                        json.dump(resp.json(), f, indent=2, ensure_ascii=False)
+                    logger.info("Base catalog successfully fetched and generated.")
+        except Exception as e:
+            logger.error(f"Failed to auto-generate catalog on startup: {e}")
+
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 CATALOG_FILE = os.path.join(DATA_DIR, "subdubanime_catalog_sample.json")
 RESULTS_FILE = os.path.join(DATA_DIR, "subdubanime_full_results.json")
