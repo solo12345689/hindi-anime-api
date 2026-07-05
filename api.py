@@ -55,6 +55,21 @@ def load_local_results() -> Dict[str, Any]:
                 return json.load(f)
         except Exception as e:
             logger.error(f"Error reading results file: {e}")
+            
+    if os.path.exists(CATALOG_FILE):
+        try:
+            with open(CATALOG_FILE, "r", encoding="utf-8") as f:
+                catalog_payload = json.load(f)
+                catalog = catalog_payload.get("data", {})
+                normalized = {"movies": [], "series": [], "dramas": []}
+                for cat in ["movies", "series", "dramas"]:
+                    for k, v in catalog.get(cat, {}).items():
+                        v["tmdbId"] = v.get("tmdbId") or k
+                        normalized[cat].append(v)
+                return normalized
+        except Exception as e:
+            logger.error(f"Error reading catalog file: {e}")
+            
     return {"movies": [], "series": [], "dramas": []}
 
 def save_local_results(data: Dict[str, Any]):
