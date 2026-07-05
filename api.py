@@ -603,13 +603,14 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--tmdbId", help="TMDB ID for recommendations or streams")
     parser.add_argument("-s", "--season", type=int, default=1, help="Season number for streams")
     parser.add_argument("-e", "--episode", type=int, default=1, help="Episode number for streams")
-    parser.add_argument("-p", "--port", type=int, default=8000, help="Port to run the FastAPI server on")
+    default_port = int(os.environ.get("PORT", 8000))
+    parser.add_argument("-p", "--port", type=int, default=default_port, help="Port to run the FastAPI server on")
     
     args = parser.parse_args()
     
     if args.action == "serve":
-        print(f"Starting FastAPI server on http://127.0.0.1:{args.port}...")
-        uvicorn.run(app, host="127.0.0.1", port=args.port)
+        print(f"Starting FastAPI server on http://0.0.0.0:{args.port}...")
+        uvicorn.run(app, host="0.0.0.0", port=args.port)
         
     elif args.action == "scrape":
         print("Starting scraper task...")
