@@ -61,8 +61,7 @@ cd subdubanime
 # Install requirements (only needed if running the API server/scraper)
 pip install -r requirements.txt
 ```
-* **Requirements:** Python 3.8+
-* **Dependencies:** `fastapi`, `uvicorn`, `httpx`, `scrapling`, `beautifulsoup4` (Client script `app.py` has no external dependencies except standard libraries).
+* **Dependencies:** `fastapi`, `uvicorn`, `httpx` (Client script `app.py` has no external dependencies except standard libraries).
 
 ---
 
