@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_DIR = r"d:\Music\iTunes\Downloads\hindi anime"
+DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 CATALOG_FILE = os.path.join(DATA_DIR, "subdubanime_catalog_sample.json")
 RESULTS_FILE = os.path.join(DATA_DIR, "subdubanime_full_results.json")
 

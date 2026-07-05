@@ -5,7 +5,7 @@ import re
 import urllib.parse
 import httpx
 
-DATA_DIR = r"d:\Music\iTunes\Downloads\hindi anime"
+DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 CATALOG_FILE = os.path.join(DATA_DIR, "subdubanime_catalog_sample.json")
 RESULTS_FILE = os.path.join(DATA_DIR, "subdubanime_full_results.json")
 
@@ -212,7 +212,7 @@ def cmd_episodes(show_query):
                             print(f"  Episode {ep} (ID: {item.get('tmdbId')}-{s_num}-{ep})")
     print("")
 
-def cmd_detail(show_id, show_type="tvshow"):
+def cmd_detail(show_id):
     data = load_data()
     item, cat = find_show(show_id, data)
     if not item:
@@ -349,7 +349,7 @@ def main():
         print("  python app.py home")
         print("  python app.py search \"<query>\"")
         print("  python app.py episodes \"<show_name_or_id>\"")
-        print("  python app.py detail <id> tvshow/movie")
+        print("  python app.py detail <id>")
         print("  python app.py stream <episode_id>")
         print("  python app.py url \"<url>\"")
         print("  python app.py interactive")
@@ -371,10 +371,9 @@ def main():
         cmd_episodes(sys.argv[2])
     elif action == "detail":
         if len(sys.argv) < 3:
-            print("Error: ID required. Usage: python app.py detail <id> [tvshow/movie]")
+            print("Error: ID required. Usage: python app.py detail <id>")
             sys.exit(1)
-        show_type = sys.argv[3] if len(sys.argv) > 3 else "tvshow"
-        cmd_detail(sys.argv[2], show_type)
+        cmd_detail(sys.argv[2])
     elif action == "stream":
         if len(sys.argv) < 3:
             print("Error: episode ID required. Usage: python app.py stream <episode_id>")

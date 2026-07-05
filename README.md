@@ -11,7 +11,7 @@ No authentication, registration, or headers needed to extract stream URLs. Autom
 python app.py home                              # Browse latest catalog (movies, series, dramas)
 python app.py search "<query>"                  # Search locally cached titles and genres
 python app.py episodes "<show_name_or_id>"      # List seasons and episode IDs for a show
-python app.py detail <id> [tvshow/movie]        # Show metadata details (rating, release, synopsis)
+python app.py detail <id>                       # Show metadata details (rating, release, synopsis)
 python app.py stream <episode_id>               # Resolve direct Rumble CDN HLS/MP4 stream URLs
 python app.py url "https://subdubanime.site/..." # Extract stream details from any page/embed URL
 python app.py interactive                       # Full interactive console menu
